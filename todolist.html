@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <link rel="icon" type="image/png" href="./imagens/5058507.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    <div class="container">
+        <h2>Suas Tarefas</h2>
+
+        <button class="add-task-btn" onclick="openModal()">Adicionar Tarefa</button>
+
+        <div class="task-container">
+            <ul id="task-list">
+              
+            </ul>
+        </div>
+    </div>
+
+   
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Nova Tarefa</h2>
+            <form id="task-form">
+                <label for="task-title">Título:</label>
+                <input type="text" id="task-title" placeholder="Digite o título da tarefa" required>
+
+                <label for="task-description">Descrição:</label>
+                <textarea id="task-description" placeholder="Digite uma descrição"></textarea>
+
+                <label for="task-due-date">Data de Vencimento (Opcional):</label>
+                <input type="date" id="task-due-date">
+
+                <button type="submit">Salvar Tarefa</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
