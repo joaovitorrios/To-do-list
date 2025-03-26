@@ -1,4 +1,4 @@
-/* Resetando as margens e preenchimentos padrão */
+/* Resetando margens e preenchimentos */
 * {
     margin: 0;
     padding: 0;
@@ -11,11 +11,11 @@ body {
     background-color: #f5f7fa; /* Cor de fundo clara */
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; /* Centraliza verticalmente */
     flex-direction: column;
     min-height: 100vh;
     color: #333;
-    padding: 40px 20px; /* Ajustando o espaçamento geral */
+    padding: 40px 20px; /* Espaçamento nas laterais */
 }
 
 /* Título principal */
@@ -23,10 +23,10 @@ h1 {
     color: #007bff; /* Cor azul */
     font-size: 36px;
     margin-bottom: 40px;
-    text-align: center;
+    text-align: center; /* Centraliza o título */
 }
 
-/* Container para o conteúdo principal */
+/* Container principal */
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -34,15 +34,15 @@ h1 {
     padding: 30px;
     width: 100%;
     max-width: 900px;
-    text-align: left;
-    margin-bottom: 40px; /* Mais espaço entre os containers */
+    text-align: center; /* Centraliza o conteúdo dentro do container */
+    margin-bottom: 40px;
 }
 
 /* Título secundário */
 h2 {
     color: #007bff;
-    margin-bottom: 30px;
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
 /* Botão de adicionar tarefa */
@@ -54,8 +54,9 @@ h2 {
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    margin-bottom: 40px; /* Espaço abaixo do botão */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+    display: inline-block; /* Ajusta o botão para se alinhar de forma adequada */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -68,7 +69,9 @@ h2 {
 .task-container {
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Maior espaço entre as tarefas */
+    gap: 20px; /* Aumentando o espaçamento entre as tarefas */
+    justify-content: center;
+    align-items: center; /* Centraliza as tarefas */
 }
 
 #task-list {
@@ -85,9 +88,9 @@ h2 {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #333;
-    transition: background-color 0.3s ease, transform 0.3s;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     position: relative;
-    margin-bottom: 15px; /* Mais espaçamento entre as tarefas */
+    margin-bottom: 15px;
 }
 
 #task-list li:hover {
@@ -107,8 +110,7 @@ h2 {
     color: #007bff;
     font-size: 16px;
     cursor: pointer;
-    transition: color 0.3s;
-    margin-left: 15px;
+    transition: color 0.3s ease;
 }
 
 #task-list li button:hover {
@@ -133,6 +135,7 @@ h2 {
     padding: 30px;
     border-radius: 10px;
     width: 500px;
+    max-width: 90%;
     color: #333;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     position: relative;
@@ -167,7 +170,7 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .modal-content input:focus, .modal-content textarea:focus, .modal-content select:focus {
@@ -175,7 +178,7 @@ h2 {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
-/* Botão no modal */
+/* Botão dentro do modal */
 .modal-content button {
     width: 100%;
     padding: 12px;
@@ -184,7 +187,7 @@ h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -194,7 +197,7 @@ h2 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsividade */
+/* Responsividade para dispositivos menores */
 @media (max-width: 768px) {
     .container {
         width: 90%;

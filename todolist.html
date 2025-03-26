@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
     <link rel="icon" type="image/png" href="./imagens/5058507.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./todolist.css">
 </head>
 <body>
     <h1>Lista de Tarefas</h1>
@@ -17,17 +17,15 @@
 
         <div class="task-container">
             <ul id="task-list">
-              
+                <!-- As tarefas serão listadas aqui -->
             </ul>
         </div>
     </div>
 
-   
     <div class="modal" id="taskModal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
             <h2>Nova Tarefa</h2>
-            <form id="task-form">
+            <form id="task-form" onsubmit="saveTask(event)">
                 <label for="task-title">Título:</label>
                 <input type="text" id="task-title" placeholder="Digite o título da tarefa" required>
 
@@ -39,9 +37,10 @@
 
                 <button type="submit">Salvar Tarefa</button>
             </form>
+            <span class="close" onclick="closeModal()">×</span>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./javascript.js"></script>
 </body>
 </html>
