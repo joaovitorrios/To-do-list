@@ -1,33 +1,82 @@
-// Inicializando o Supabase com a URL e a chave pública
+
 const supabaseUrl = 'https://orldomgmamcwxjstmvdp.supabase.co'; 
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ybGRvbWdtYW1jd3hqc3RtdmRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5Mjc5NjAsImV4cCI6MjA1ODUwMzk2MH0.X57ES0JZ3LOC_zCVhJn8rP4ShuFVXG2eLOUKxxTvBRk';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Função para abrir o modal
-function openModal() {
-    document.getElementById('taskModal').style.display = 'flex';
+
+async function checkUserLoggedIn() {
+    const user = supabase.auth.user();
+    if (!user) {
+        
+        window.location.href = 'index.html';
+    }
+    return user;
 }
 
-// Função para fechar o modal
-function closeModal() {
-    document.getElementById('taskModal').style.display = 'none';
-}
 
-// Carregar as tarefas do banco de dados
-async function loadTasks() {
-    const { data: tasks, error } = await supabase
-        .from('tasks')
-        .select('*')
-        .eq('user_id', supabase.auth.user()?.id);  // Filtra as tarefas pelo ID do usuário logado
+document.getElementById('login-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const { user, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
 
     if (error) {
-        console.error(error.message);
+        alert('Erro no login: ' + error.message);
+    } else {
+        window.location.href = 'todolist.html';  
+    }
+});
+
+
+document.getElementById('register-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const name = document.getElementById('name').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (password !== confirmPassword) {
+        alert('As senhas não coincidem');
+        return;
+    }
+
+    const { user, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+    });
+
+    if (error) {
+        document.getElementById('message').innerText = 'Erro: ' + error.message;
+    } else {
+        
+        await supabase
+            .from('users') 
+            .insert([{ name, email, user_id: user.id }]);
+
+        document.getElementById('message').innerText = 'Cadastro realizado com sucesso!';
+        setTimeout(() => window.location.href = 'index.html', 2000); 
+    }
+});
+
+
+async function loadTasks() {
+    const user = await checkUserLoggedIn();
+    const { data: tasks, error } = await supabase.from('tasks').select('*').eq('user_id', user.id);
+
+    if (error) {
+        console.error('Erro ao carregar tarefas: ', error.message);
         return;
     }
 
     const taskList = document.getElementById('task-list');
-    taskList.innerHTML = ''; // Limpa a lista antes de adicionar novamente as tarefas
-
+    taskList.innerHTML = '';  
+    
     tasks.forEach(task => {
         const taskItem = document.createElement('li');
         taskItem.classList.add('task-item');
@@ -44,96 +93,68 @@ async function loadTasks() {
     });
 }
 
-// Função para adicionar tarefa ao banco de dados
-document.getElementById('task-form').addEventListener('submit', async function(event) {
+
+async function saveTask(event) {
     event.preventDefault();
 
     const title = document.getElementById('task-title').value;
     const description = document.getElementById('task-description').value;
     const dueDate = document.getElementById('task-due-date').value;
-    const userId = supabase.auth.user()?.id;  // Pega o ID do usuário logado
+    const user = await checkUserLoggedIn();
 
-    // Insere a nova tarefa no banco de dados
     const { data, error } = await supabase
         .from('tasks')
-        .insert([
-            { title, description, due_date: dueDate, user_id: userId }
-        ]);
+        .insert([{
+            title,
+            description,
+            due_date: dueDate,
+            user_id: user.id
+        }]);
 
     if (error) {
-        alert(error.message);
+        alert('Erro ao adicionar tarefa: ' + error.message);
     } else {
-        loadTasks();  // Recarrega as tarefas na página
-        closeModal();  // Fecha o modal
+        loadTasks();  
+        closeModal();  
     }
-});
+}
 
-// Função para excluir tarefa
+
 async function deleteTask(taskId) {
     const { error } = await supabase
         .from('tasks')
         .delete()
-        .eq('id', taskId);  // Exclui a tarefa com o ID correspondente
+        .eq('id', taskId);
 
     if (error) {
-        alert(error.message);
+        alert('Erro ao excluir tarefa: ' + error.message);
     } else {
-        loadTasks();  // Recarrega as tarefas na página
+        loadTasks();  
     }
 }
 
-// Função para marcar tarefa como concluída
 async function markAsCompleted(taskId) {
     const { error } = await supabase
         .from('tasks')
         .update({ completed: true })
-        .eq('id', taskId);  // Marca a tarefa como concluída
+        .eq('id', taskId);
 
     if (error) {
-        alert(error.message);
+        alert('Erro ao marcar tarefa como concluída: ' + error.message);
     } else {
-        loadTasks();  // Recarrega as tarefas na página
+        loadTasks();  
     }
 }
 
-// Função de login
-async function loginUser(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    const { user, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
-    
-    if (error) {
-        alert(error.message);
-    } else {
-        window.location.href = 'todolist.html';  // Redireciona para a página de tarefas
-    }
+
+function openModal() {
+    document.getElementById('taskModal').style.display = 'flex';
 }
 
-// Função de registro
-async function registerUser(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    const { user, error } = await supabase.auth.signUp({
-        email: email,
-        password: password
-    });
 
-    if (error) {
-        alert(error.message);
-    } else {
-        alert('Conta criada com sucesso!');
-        window.location.href = 'index.html';  // Redireciona para a página de login
-    }
+function closeModal() {
+    document.getElementById('taskModal').style.display = 'none';
 }
 
-// Carrega as tarefas ao abrir a página de tarefas
+
 document.addEventListener('DOMContentLoaded', loadTasks);

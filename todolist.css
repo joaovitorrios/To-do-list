@@ -1,32 +1,31 @@
-/* Resetando margens e preenchimentos */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo geral do corpo */
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f7fa; /* Cor de fundo clara */
+    background-color: #f5f7fa; 
     display: flex;
     justify-content: center;
-    align-items: center; /* Centraliza verticalmente */
+    align-items: center; 
     flex-direction: column;
     min-height: 100vh;
     color: #333;
-    padding: 40px 20px; /* Espaçamento nas laterais */
+    padding: 40px 20px; 
 }
 
-/* Título principal */
 h1 {
-    color: #007bff; /* Cor azul */
+    color: #007bff; 
     font-size: 36px;
     margin-bottom: 40px;
-    text-align: center; /* Centraliza o título */
+    text-align: center; 
 }
 
-/* Container principal */
+
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -34,18 +33,18 @@ h1 {
     padding: 30px;
     width: 100%;
     max-width: 900px;
-    text-align: center; /* Centraliza o conteúdo dentro do container */
+    text-align: center;
     margin-bottom: 40px;
 }
 
-/* Título secundário */
+
 h2 {
     color: #007bff;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-/* Botão de adicionar tarefa */
+
 .add-task-btn {
     background-color: #007bff;
     color: white;
@@ -56,7 +55,7 @@ h2 {
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 30px;
-    display: inline-block; /* Ajusta o botão para se alinhar de forma adequada */
+    display: inline-block; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,13 +64,13 @@ h2 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Lista de tarefas */
+
 .task-container {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Aumentando o espaçamento entre as tarefas */
+    gap: 20px; 
     justify-content: center;
-    align-items: center; /* Centraliza as tarefas */
+    align-items: center; 
 }
 
 #task-list {
@@ -103,7 +102,7 @@ h2 {
     text-decoration: line-through;
 }
 
-/* Botões dentro da lista de tarefas */
+
 #task-list li button {
     background-color: transparent;
     border: none;
@@ -117,7 +116,7 @@ h2 {
     color: #0056b3;
 }
 
-/* Modal de adicionar/editar tarefa */
+
 .modal {
     display: none;
     position: fixed;
@@ -162,7 +161,7 @@ h2 {
     color: #333;
 }
 
-/* Campos do modal (formulário) */
+
 .modal-content input, .modal-content textarea, .modal-content select {
     width: 100%;
     margin-bottom: 15px;
@@ -178,7 +177,7 @@ h2 {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
-/* Botão dentro do modal */
+
 .modal-content button {
     width: 100%;
     padding: 12px;
@@ -197,7 +196,7 @@ h2 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsividade para dispositivos menores */
+
 @media (max-width: 768px) {
     .container {
         width: 90%;
